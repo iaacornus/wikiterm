@@ -24,17 +24,17 @@ def main(word, fetch="summary"):
                 print(f"\t{num+1}) {words}")
         else:
             print(f"{colors.CREDBG}{colors.CBOLD}{results[1]}{colors.CEND}")
-    elif results[1] is True:
+    elif results[0] is True:
         # print the word
-        print(f"{colors.CBLUEBG}{colors.CBOLD} {word.upper()} {colors.CEND}\n")
+        print(f"{colors.CBLUEBG}{colors.CBOLD} {word.upper()}: {fetch.upper()} {colors.CEND}\n")
     
         if fetch == "summary": 
             summary = results[1].replace("\n", "\n\n")
             
             # print the fetched information
-            print(f"{summary}\n\n{colors.CBEIGEBG}{colors.CBOLD}Wikipedia page URL(s):{colors.CEND}\n{colors.CBOLD}Full URL:{colors.CEND} {results[1]}\n{colors.CBOLD}Canonical URL:{colors.CEND} {results[2]}{colors.CEND}")
+            print(f"{summary}\n\n{colors.CBEIGEBG}{colors.CBOLD}Wikipedia page URL(s):{colors.CEND}\n{colors.CBOLD}Full URL:{colors.CEND} {results[2]}\n{colors.CBOLD}Canonical URL:{colors.CEND} {results[3]}{colors.CEND}")
 
         elif fetch == "full":
             pass
   
-main(word="hello")
+main(word="space")
