@@ -33,7 +33,6 @@ class wiki:
     def fetch_info(self) -> str or list:
         wiki = wikiapi.Wikipedia(self.lang) if self.fetch == "summary" else wikiapi.Wikipedia(language=self.lang, extract_format=wikiapi.ExtractFormat.HTML)
         page_py = wiki.page(self.word)
-   
         
         if page_py.exists() is True:
             return True, page_py.title, [section.title for section in page_py.sections], f"{page_py.summary if self.fetch == 'summary' else page_py.text}", page_py.fullurl, page_py.canonicalurl
