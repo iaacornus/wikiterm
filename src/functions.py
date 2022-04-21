@@ -1,6 +1,5 @@
-import wikipediaapi as wiki
+import wikipediaapi as wikiapi
 import enchant as suggest 
-
 import urllib
 
 class wiki:
@@ -9,7 +8,7 @@ class wiki:
         self.word = word
         
     def fetch_summary(self) -> str or list:
-        wiki = wiki.Wikipedia(self.lang)
+        wiki = wikiapi.Wikipedia(self.lang)
         page_py = wiki.page(self.word)        
         alpha, ALPHA = list("abcdefghijklmnopqrstuvwxyz"), list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
         comb = []
@@ -19,7 +18,7 @@ class wiki:
                 comb.append(x+y)
 
         if page_py.exists() is True:
-            return f"{str(page_py.summary)}", f"Full URL = {page_py.fullurl}\nCanonical URL = {page_py.canonicalurl}"
+            return f"{str(page_py.summary)}", page_py.fullurl, page_py.canonicalurl
 
         else:
             if (self.word[0].upper()+self.word[1].lower()) not in comb:
@@ -38,6 +37,7 @@ class wiki:
                     return lang.suggest(self.word)
 
     def fetch_full(self) -> str:
-        wiki = wiki.Wikipedia(self.lang, extract_format=wiki.ExtractFormat.WIKI)
-        
+        wiki = wikiapi.Wikipedia(self.lang, extract_format=wikiapi.ExtractFormat.WIKI)
+        page_py = wiki.page(self.word)
+        print(page_py.text)
         
