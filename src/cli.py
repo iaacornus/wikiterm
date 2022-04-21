@@ -15,7 +15,6 @@ def program_options():
                         action="store_true")
     
     args = parser.parse_args()
-    print(args.word)
     main(args.word, args.full)
 
 try:
