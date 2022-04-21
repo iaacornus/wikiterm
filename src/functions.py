@@ -3,12 +3,12 @@ import enchant as suggest
 import urllib
 
 class wiki:
-    def __init__(self, word, fetch="summary", lang="en") -> None:
+    def __init__(self, word, full=False, lang="en") -> None:
         self.lang = lang
         self.word = word
-        self.fetch = fetch
-    
-    def alternative(self) -> bool:
+        self.full = full
+        
+    def alternative(self) -> str or list:
         alpha, ALPHA, comb = list("abcdefghijklmnopqrstuvwxyz"), list("ABCDEFGHIJKLMNOPQRSTUVWXYZ"), []
         
         for x in ALPHA:
@@ -31,11 +31,11 @@ class wiki:
                 return lang.suggest(self.word) if lang.suggest(self.word) != [] else "There is no available suggestion for the given word."
     
     def fetch_info(self) -> str or list:
-        wiki = wikiapi.Wikipedia(self.lang) if self.fetch == "summary" else wikiapi.Wikipedia(language=self.lang, extract_format=wikiapi.ExtractFormat.WIKI)
+        wiki = wikiapi.Wikipedia(self.lang) if self.full is False else wikiapi.Wikipedia(language=self.lang, extract_format=wikiapi.ExtractFormat.WIKI)
         page_py = wiki.page(self.word)
         
         if page_py.exists() is True:
-            return True, page_py.title, [section for section in page_py.sections], page_py.summary, page_py.text, page_py.fullurl, page_py.canonicalurl
+            return True, page_py.title, [section for section in page_py.sections], page_py.summary, page_py.text, page_py.fullurl, page_py.canonicalurl, "FULL" if self.full is True else "SUMMARY"
 
         else:
             return False, self.alternative()
