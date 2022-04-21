@@ -19,10 +19,22 @@ def main(word, fetch="summary"):
     elif fetch == "full":
         results = WIKI.fetch_full()
 
+    # remove the status 
     sys.stdout.write("\033[K")
 
+    # print the word
     print(f"{colors.CBLUEBG}{colors.CBOLD} {word.upper()} {colors.CEND}\n")
-    print(f"{summary}\n\n{colors.CREDBG}{colors.CBOLD}Wikipedia page URL(s):{colors.CEND}\n{colors.CBOLD}Full URL:{colors.CEND} {results[1]}\n{colors.CBOLD}Canonical URL:{colors.CEND} {results[2]}{colors.CEND}")
-
     
-main("space", fetch="full")
+    # print the fetched information
+    print(f"{summary}\n\n{colors.CBEIGEBG}{colors.CBOLD}Wikipedia page URL(s):{colors.CEND}\n{colors.CBOLD}Full URL:{colors.CEND} {results[1]}\n{colors.CBOLD}Canonical URL:{colors.CEND} {results[2]}{colors.CEND}")
+
+word = "Python"
+WIKI = wiki(word.lower())
+alt = WIKI.alternative()
+
+if str(type(alt)) == "<class 'list'>":
+    print(f"{colors.CYELLOWBG}{colors.CBOLD}Perhaps you mean:{colors.CEND}")
+    for num, words in enumerate(alt):
+        print(f"\t{num+1}) {words}")
+else:
+    print(f"{colors.CREDBG}{colors.CBOLD}{alt}{colors.CEND}")
